@@ -29,7 +29,7 @@ datatable(Tabla,
 
 ```
 
-### Solucion 
+### - Solucion 
 
 Maximizar $$z=3000x_1+5000x_2$$
 sujeto a: $$0.5x_1+0.2x_2<=16$$
