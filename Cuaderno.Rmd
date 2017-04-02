@@ -5,31 +5,63 @@ output: html_notebook
 ---
 
 # Ejercicio 1
+## Problema de las ligas metalicas
+
+
+Una metalúrgica desea maximizar su receta bruta. La Tabla 1 ilustra la proporcion de cada material
+que se necesita para obtener las ligas que se fabrican. El precio esta expresado en reales por toneladas
+de liga fabricada. Tambien en toneladas estan expresadas las restricciones disponibilidade de materia prima. Formular un modelo de Programacion Matemática.
+
+```{r tabla 1}
+library(dplyr)
+library(ggplot2)
+
+Tabla <- data_frame(Material = c("Cobre", "Zinc", "Chumbo", "Precio de Venta"), 
+                    "Liga de baja resistencia" = c(0.5, 0.25, 0.25, 3000), 
+                    "Liga de alta resistencia" = c(0.2, 0.30, 0.50, 5000), 
+                    "Disponibilidad de materia prima" = c(16, 11, 15, NA))
+datatable(Tabla, 
+          rownames = F, 
+          caption = "Tabla 1: Restricciones/Costos del ejercicio 1", 
+          style = "bootstrap", 
+          options = list(searching = F, 
+                         paging = FALSE))
+
+```
+
+### Solucion 
 
 Maximizar $$z=3000x_1+5000x_2$$
 sujeto a: $$0.5x_1+0.2x_2<=16$$
-$$0.25x_1+0.3x_2<=11 (1)$$
-$$0.25x_1+0.5x_2<=15 (2)$$
-$$x_1>=0, x_2>=0 (3)$$
+$$0.25x_1+0.3x_2<=11$$
+$$0.25x_1+0.5x_2<=15$$
+$$x_1>=0, x_2>=0$$
 
 
 
 ```{r Grafica}
-x1 = 16/0.5
-y1 = 16/0.2
-x2 = 11/0.25
-y2 = 11/0.3
-x3 = 15/0.25
-y3 = 15/0.5
+x1 = Tabla$`Disponibilidad de materia prima`[1]/Tabla$`Liga de baja resistencia`[1]
+y1 = Tabla$`Disponibilidad de materia prima`[1]/Tabla$`Liga de alta resistencia`[1]
+x2 = Tabla$`Disponibilidad de materia prima`[2]/Tabla$`Liga de baja resistencia`[2]
+y2 = Tabla$`Disponibilidad de materia prima`[2]/Tabla$`Liga de alta resistencia`[2]
+x3 = Tabla$`Disponibilidad de materia prima`[3]/Tabla$`Liga de baja resistencia`[3]
+y3 = Tabla$`Disponibilidad de materia prima`[3]/Tabla$`Liga de alta resistencia`[3]
 ggplot(data_frame(x1, x2, x3, y1, y2, y3)) + 
-  geom_segment(aes(x = x1, xend = 0, y = 0, yend = y1, colour = "0.5x1+0.2x2=16"), ) +
-  geom_text(aes(x = x1, y = 0, label = "a"))+
-  geom_segment(aes(x = x2, xend = 0, y = 0, yend = y2, colour = "2")) +
-  geom_segment(aes(x = x3, xend = 0, y = 0, yend = y3, colour = "3")) + 
-  labs(x = "X", y = "Y", colour = "Restriccion")
+  geom_segment(aes(x = x1, xend = 0, y = 0, yend = y1, colour = "1"), show.legend = F) +
+  geom_text(aes(x = 0, y = y1, label = "0.5*x[1]+0.2*x[2]==16"), parse = T, hjust = -0.1) +
+  geom_segment(aes(x = x2, xend = 0, y = 0, yend = y2, colour = "2"), show.legend = F) +
+  geom_text(aes(x = 0, y = y2, label = "0.25*x[1]+0.3*x[2]==11"), parse = T, hjust = -0.1) +
+  geom_segment(aes(x = x3, xend = 0, y = 0, yend = y3, colour = "3"), show.legend = F) + 
+  geom_text(aes(x = 0, y = y3, label = "0.25*x[1]+0.5*x[2]==15", hjust = -0.1), parse = T) +
+  geom_point(aes(x = 0, y = y3)) + 
+  geom_text(aes(x = 0, y = y3, label = "A"), vjust = 1.5) +
+  geom_point(aes(x = 20, y = 20)) +
+  geom_text(aes(x = 20, y = 20, label = "B"), vjust = 1.5) +
+  geom_point(aes(x = 26, y = 15)) +
+  geom_text(aes(x = 26, y = 15, label = "C"), vjust = 1.5) +
+  geom_point(aes(x = x1, y = 0)) +
+  geom_text(aes(x = x1, y = 0, label = "D"), vjust = 1.5) +
+  labs(x = "X", y = "Y", title = "Grafico 1: ")
 
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
