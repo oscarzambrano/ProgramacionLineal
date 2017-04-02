@@ -1,0 +1,35 @@
+---
+title: "Programacion lineal"
+author: "Rossana Velasquez"
+output: html_notebook
+---
+
+# Ejercicio 1
+
+Maximizar $$z=3000x_1+5000x_2$$
+sujeto a: $$0.5x_1+0.2x_2<=16$$
+$$0.25x_1+0.3x_2<=11 (1)$$
+$$0.25x_1+0.5x_2<=15 (2)$$
+$$x_1>=0, x_2>=0 (3)$$
+
+
+
+```{r Grafica}
+x1 = 16/0.5
+y1 = 16/0.2
+x2 = 11/0.25
+y2 = 11/0.3
+x3 = 15/0.25
+y3 = 15/0.5
+ggplot(data_frame(x1, x2, x3, y1, y2, y3)) + 
+  geom_segment(aes(x = x1, xend = 0, y = 0, yend = y1, colour = "0.5x1+0.2x2=16"), ) +
+  geom_text(aes(x = x1, y = 0, label = "a"))+
+  geom_segment(aes(x = x2, xend = 0, y = 0, yend = y2, colour = "2")) +
+  geom_segment(aes(x = x3, xend = 0, y = 0, yend = y3, colour = "3")) + 
+  labs(x = "X", y = "Y", colour = "Restriccion")
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
